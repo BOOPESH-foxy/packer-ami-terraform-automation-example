@@ -17,7 +17,7 @@ The project consists of the following components:
 2. **Terraform**:
    - **`main.tf`**: Defines the infrastructure for creating an EC2 instance using the custom AMI.
    - **`variables.tf`**: Specifies input variables like AWS region and EC2 instance type.
-   - **`terraform.tfvars`**: Holds the values of the variables.
+   - **`outputs.tf`**: To output the instance public ip.
 3. **.github/workflows**:
    - **`github-actions.yaml`**: CI/CD pipeline that builds the AMI and deploys the EC2 instance.
 
