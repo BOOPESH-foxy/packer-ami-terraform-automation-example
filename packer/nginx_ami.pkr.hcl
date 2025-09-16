@@ -1,21 +1,26 @@
 packer {
-  required_version = ">= 1.5.0"
+  required_plugins {
+    amazon = {
+      version = ">= 1.2.8"
+      source  = "github.com/hashicorp/amazon"
+    }
+  }
 }
 
-source "amazon-ebs" "nginx" {
-  region                 = "ap-south-1"
+source "amazon-ebs" "ubuntu" {
+  ami_name      = "learn-packer-linux-aws"
+  instance_type = "t2.micro"
+  region        = "us-west-2"
   source_ami_filter {
     filters = {
-      virtualization-type = "hvm"
-      name                = "amzn2-ami-hvm-*-x86_64-gp2"
+      name                = "ubuntu/images/*ubuntu-jammy-22.04-amd64-server-*"
       root-device-type    = "ebs"
+      virtualization-type = "hvm"
     }
-    owners      = ["137112412989"]  # Amazon AMIs
     most_recent = true
+    owners      = ["099720109477"]
   }
-  instance_type = "t2.micro"
-  ami_name      = "nginx-packer-{{timestamp}}"
-  ssh_username  = "ec2-user"
+  ssh_username = "ubuntu"
 }
 
 build {

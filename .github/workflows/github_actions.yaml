@@ -25,6 +25,9 @@ jobs:
           chmod +x install_script.sh          # make the script executable
           ./install_script.sh                 # run the script to install its contents
 
+    - name: Packer init
+      run:  packer init packer/
+      
     - name: Build AMI with Hashicorp Packer
       run:  packer build packer/nginx_ami.pkr.hcl
 
