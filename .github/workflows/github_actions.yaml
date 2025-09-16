@@ -27,7 +27,7 @@ jobs:
 
     - name: Packer init
       run:  packer init packer/
-      
+
     - name: Build AMI with Hashicorp Packer
       run:  packer build packer/nginx_ami.pkr.hcl
 
@@ -35,4 +35,4 @@ jobs:
       run:  |
         cd terraform
         terraform init
-        terraform apply -var="owner_id=${{ secrets.OWNER_ID }}" -auto-approve
+        terraform apply -var="owner_id=[${{ secrets.OWNER_ID }}]" -auto-approve
