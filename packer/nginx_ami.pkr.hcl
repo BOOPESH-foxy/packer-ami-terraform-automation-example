@@ -8,7 +8,7 @@ packer {
 }
 
 source "amazon-ebs" "nginx" {
-  ami_name      = "learn-packer-linux-aws"
+  ami_name      = "nginx-packer-{{timestamp}}"
   instance_type = "t2.micro"
   region        = "ap-south-1"
   source_ami_filter {
