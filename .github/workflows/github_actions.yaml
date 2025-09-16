@@ -1,0 +1,35 @@
+name: Terraform deploy - custom ami(Hashicorp - Packer)
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on:  ubuntu-latest                               # runner
+
+    steps:
+    - name: checkout the repository                       # clone the repository to the runner
+      uses: actions/checkout@v2
+
+    - name:  Setup AWS CLI
+      uses: aws-actions/configure-aws-credentials@v1
+      with:                                                       # add the below to the repository secrets for the actions to access
+        aws-access-key-id:  ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key:  ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws-region: ${{ secrets.REGION }}
+  
+    - name: Install Hashicorp Packer and Terraform
+      run:  |
+          chmod +x install_script.sh          # make the script executable
+          ./install_script.sh                 # run the script to install its contents
+
+    - name: Build AMI with Hashicorp Packer
+      run:  packer build packer/nginx_ami.pkr.hcl
+
+    - name: Terraform Init and Apply
+      run:  |
+        cd terraform
+        terraform init
+        terraform apply -var="owner_id=${{ secrets.OWNER_ID }}" -auto-approve
