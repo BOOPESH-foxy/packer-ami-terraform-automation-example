@@ -7,10 +7,10 @@ packer {
   }
 }
 
-source "amazon-ebs" "ubuntu" {
+source "amazon-ebs" "nginx" {
   ami_name      = "learn-packer-linux-aws"
   instance_type = "t2.micro"
-  region        = "us-west-2"
+  region        = "ap-south-1"
   source_ami_filter {
     filters = {
       name                = "ubuntu/images/*ubuntu-jammy-22.04-amd64-server-*"
